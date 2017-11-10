@@ -20,10 +20,9 @@ public class SyncJobBean extends QuartzJobBean {
 
 	/* 日志对象 */
 	private static final Logger LOG = LoggerFactory.getLogger(SyncJobBean.class);
-
+private String a="";
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		LOG.info("SyncJobFactory execute");
-		
 		try {
 			context.getScheduler().getContext().get("applicationContextKey");
 		} catch (SchedulerException e) {
