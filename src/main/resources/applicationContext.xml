@@ -56,12 +56,16 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
+
+    <!-- 实现依赖注入，查看 QuartzJobBean注释 -->
+	<bean id="springBeanJobFactory" class="org.springframework.scheduling.quartz.SpringBeanJobFactory"></bean>
+
     <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="schedulerName" value="MATAS-ClusterScheduler" />
         <property name="configLocation" value="classpath:quartz.properties"/>
-        <!--必须的，QuartzScheduler 延时启动，应用启动完后 QuartzScheduler 再启动 -->
         <property name="startupDelay" value="1" />
-
+		
+		<property name="jobFactory" ref="springBeanJobFactory"></property>
         <property name="applicationContextSchedulerContextKey" value="applicationContextKey" />
 
         <!--可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
@@ -69,7 +73,5 @@
 
         <!-- 设置自动启动 -->
         <property name="autoStartup" value="true" />
-
-        <!--<property name="configLocation" value="classpath:quartz.properties" />-->
     </bean>
 </beans>

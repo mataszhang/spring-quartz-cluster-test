@@ -1,5 +1,7 @@
 package com.matas.quartz;
 
+import javax.annotation.Resource;
+
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -24,10 +26,11 @@ public class SyncJobStatusJobBean extends QuartzJobBean {
 
     /* 日志对象 */
     private static final Logger LOG = LoggerFactory.getLogger(SyncJobStatusJobBean.class);
-
+    @Resource
+    private ScheduleJobService service;
+    
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         LOG.info("执行任务状态同步任务");
-        ScheduleJobService service = SpringUtils.getBean(ScheduleJobService.class);
         service.syncStatus();
     }
 }
